@@ -1,1 +1,101 @@
 
+using System;
+using System.Linq;
+using System.Diagnostics;
+
+namespace hometask5
+{
+    class Program
+    {
+        static void Main()
+        {
+           
+
+            string comm = Command();
+            MyCommands(comm);
+            // Используем рекурсию для вызова новых команд
+            if (comm != "X")
+            {
+                Main();
+            }
+        }
+        static string Command()
+        {
+            Console.WriteLine("Какую информацию нужно получить? \n" + 
+                " 1 - Запуск процесса\n 2- Останов процесса\n 3- Вывести всё процесы\n X - выход\n");
+            Console.Write("Введите команду: ");
+            string comm = Console.ReadLine();
+            return comm;
+        }
+        static void MyCommands(string str)
+        {
+            switch (str)
+            {
+                case "x":
+                    break;
+                case "1":
+                     StartProcess();
+                    break;
+                case "2":
+                     StopProcess();
+                    break;
+                case "3":
+                    ViewAllProcess();
+                    break;
+                default:
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Команда не распознана!");
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    break;
+            }
+        }
+        static void StartProcess()
+        {
+            Process myProc = null;
+            // Запустить сайт professorweb.ru на машине пользователя
+            try
+            {
+                // Будет работать только для пользавателей у которых установлен браузер Google Chrome
+                // Чтобы запустить IE, нужно запустить процесс IExplore.exe
+                Process.Start("Z:/Origin/Origin.exe");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+        }
+        static void StopProcess()
+        {
+            Console.Write("Введите PID-идентификатор процесса, который нужно остановить: ");
+            string pid = Console.ReadLine();
+            Process myProc = null;
+            try
+            {
+                int i = int.Parse(pid);
+                myProc = Process.GetProcessById(i);
+                myProc.Kill();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+        static void ViewAllProcess()
+        {
+            Console.WriteLine("Вашы процессы");
+            var procces = from proc in Process.GetProcesses(".")
+                          orderby proc.Id
+                          select proc;
+            int i = 0;
+
+            foreach (var proc in procces)
+            {
+                i++;
+                string infproc = string.Format(@"Proc № -> {0}:
+        Pid -> {1}
+        name -> {2}", i, proc.Id, proc.ProcessName);
+                Console.WriteLine(infproc);
+            }
+        }
+    }
+}
