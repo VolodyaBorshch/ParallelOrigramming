@@ -1,0 +1,40 @@
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace hometask6
+{
+    class Program
+    {
+        //Простий метод факторіал
+        static void FactorialChisla()
+        {
+            int res = 1;
+
+            for(int i = 1; i <= 14; i++)
+            {
+                res *= i;
+            }
+            Thread.Sleep(8000);
+            Console.WriteLine($"Factorial={res}");
+        }
+        //Цей метод робить попередній асинхронним
+        static async void FactorialAcync()
+        {
+            Console.WriteLine("Початок метода FactorialAcync");
+            //тут визивається асинхронна операція
+            await Task.Run(() => FactorialChisla());
+            Console.WriteLine("Finish metod FactorialAcync");
+        }
+        static void Main(string[] args)
+        {
+           
+            FactorialAcync();
+            Console.WriteLine("Enter number:");
+            int n = Int32.Parse(Console.ReadLine());
+            Console.WriteLine($"Квадрат числа рівний :{n*n}");
+            
+            Console.Read();
+        }
+    }
+}
