@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Ласкаво прошу!</h1>
+    <p>Дізнайтесь про --> <a href="https://docs.microsoft.com/aspnet/core">Створення аплікації з допомогою  ASP.NET Core</a>.</p>
+    <form method="post" action="/Home/Buy">
+        <input type="hidden" value="@ViewBag" name="MyForm" id="name" />
+        <table>
+            <tr>
+                <td><p>Введите свое имя </p></td>
+                <td><input type="text" name="Person" id="adress"/> </td>
+            </tr>
+            <tr>
+                <td><p>Введите адрес :</p></td>
+                <td><input type="text" name="Address" /> </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="submit" value="Вывести" />
+                    <p>
+                       
+                </td>
+                <td></td>
+            </tr>
+        </table>
+    </form>
+</div>
